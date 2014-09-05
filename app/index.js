@@ -21,27 +21,27 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       name: 'name',
       message: 'What is the name of your application?'
     },{
-      type: 'confirm',
+      type: 'list',
       name: 'less',
-      message: 'Would you like to use less?',
-      default: false
+      message: 'Would you like to use css or less?',
+      choices: ['css', 'less']
     },{
-      type: 'confirm',
+      type: 'list',
       name: 'coffee',
-      message: 'Would you like to use coffee?',
-      default: false
+      message: 'Would you like to use js or coffee?',
+      choices: ['js', 'coffee']
     },{
-      type: 'confirm',
-      name: 'visualstudio',
-      message: 'Would you like to use visualstudio?',
-      default: false
+      type: 'list',
+      name: 'ide',
+      message: 'Which ide would you like to use?',
+      choices: ['none', 'visualstudio']
     }];
 
     this.prompt(prompts, function (props) {
-      this.name = props.name;
-      this.less = props.less;
-      this.coffee = props.coffee;
-      this.visualstudio = props.visualstudio;
+      this.name   = props.name;
+      this.less   = props.less === 'less';
+      this.coffee = props.coffee === 'coffee';
+      this.ide    = props.ide;
 
       done();
     }.bind(this));
@@ -55,12 +55,12 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
         less_enabled: this.less
       };
 
-      this.src.copy('_root_package.json',       'package.json',       context);
-      this.src.copy('_root_bower.json',         'bower.json',         context);
+      this.template('_root_package.json',       'package.json',       context);
+      this.template('_root_bower.json',         'bower.json',         context);
 
-      this.src.copy('_root_index.html',         'index.html',         context);
-      this.src.copy('_root_index.debug.html',   'index.debug.html',   context);
-      this.src.copy('_root_index.release.html', 'index.release.html', context);
+      this.template('_root_index.html',         'index.html',         context);
+      this.template('_root_index.debug.html',   'index.debug.html',   context);
+      this.template('_root_index.release.html', 'index.release.html', context);
     },
     app: function () {
       this.dest.mkdir('app');
@@ -72,9 +72,9 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       }
 
       if (this.coffee) {
-          this.src.copy('_app_app.coffee',      'app/app.coffee',     context);
+          this.template('_app_app.coffee',      'app/app.coffee',     context);
       } else {
-          this.src.copy('_app_app.js',          'app/app.js',         context);
+          this.template('_app_app.js',          'app/app.js',         context);
       }
     },
     test: function () {
@@ -86,8 +86,8 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
           less_enabled: this.less
       };
 
-      this.src.copy('_test_index.test.html', 'test/index.test.html',  context);
-      this.src.copy('_test_jasmine.css',     'test/jasmine.css',      context);
+      this.template('_test_index.test.html', 'test/index.test.html',  context);
+      this.template('_test_jasmine.css',     'test/jasmine.css',      context);
     },
     grunt: function () {
       this.dest.mkdir('grunt');
@@ -99,12 +99,10 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       };
 
       if (this.coffee) {
-        this.src.copy('_grunt_.coffeelintrc',   'grunt/.coffeelintrc');
-      } else {
-        this.src.copy('_grunt_.jshintrc',       'grunt/.jshintrc');
+        this.src.copy('_grunt_.coffeelintrc','grunt/.coffeelintrc'           );
       }
-
-      this.src.copy('_grunt_gruntfile.js',      'grunt/gruntfile.js', context);
+      this.src.copy('_grunt_.jshintrc',      'grunt/.jshintrc'               );
+      this.template('_grunt_gruntfile.js',   'grunt/gruntfile.js',    context);
     }
 
   },
