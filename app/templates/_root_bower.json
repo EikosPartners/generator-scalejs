@@ -1,6 +1,10 @@
 {
   "name": "package",
   "version": "0.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "requirejs": "latest",
+    "almond": "latest",
+    "scalejs": "lisovin/scalejs#docs"
+  }
 }
 
