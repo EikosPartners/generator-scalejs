@@ -1,11 +1,9 @@
 {
-// enforcing
     "bitwise":    "true",
     "camelcase":  "false",
     "curly":      "true",
     "eqeqeq":     "false",
     "forin":      "false",
-    //freeze
     "immed":      "false",
     "indent":     4,
     "latedef":    "true",
@@ -15,16 +13,11 @@
     "nonbsp":     "false",
     "nonew":      "true",
     "plusplus":   "true",
-    "quotmark":   "single,
+    "quotmark":   "single",
     "undef":      "true",
     "unused":     "true",
     "strict":     "false",
-    //maxparams
-    //maxdepth
-    //maxstatements
-    //maxcomplexity
     "maxlen":     "160",
-// relaxing
     "asi":        "false",
     "boss":       "false",
     "debug":      "false",
@@ -38,8 +31,6 @@
     "laxbreak":   "false",
     "laxcomma":   "false",
     "loopfunc":   "false",
-    //maxerr
-    //moz
     "multistr":   "false",
     "notypeof":   "false",
     "proto":      "false",
@@ -48,8 +39,6 @@
     "sub":        "false",
     "supernew":   "false",
     "validthis":  "false",
-    //noyield
-// environment
     "browser":    "false",
     "couch":      "false",
     "devel":      "false",
@@ -58,10 +47,9 @@
     "mootools":   "false",
     "node":       "false",
     "nonstandard":"false",
-    //phantom
     "prototypejs":"false",
     "rhino":      "false",
     "worker":     "false",
     "wsh":        "false",
-    "yui":        "false",
+    "yui":        "false"
 }
