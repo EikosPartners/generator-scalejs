@@ -1,0 +1,9 @@
+lint:
+    - 'newer:jshint'
+
+compile:
+    - 'lint'
+
+build:
+    - 'compile'
+    - 'bower'

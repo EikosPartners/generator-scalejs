@@ -1,0 +1,10 @@
+lint:
+    - 'newer:coffeelint'
+
+compile:
+    - 'lint'
+    - 'newer:coffee'
+
+build:
+    - 'compile'
+    - 'bower'
