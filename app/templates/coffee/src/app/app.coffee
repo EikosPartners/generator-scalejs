@@ -1,7 +1,7 @@
 
 # global require
 
-require [ 'scalejs!application/main' ], ( application ) ->
+require [ ], ( ) ->
 
-    application.run()
+    undefined
 

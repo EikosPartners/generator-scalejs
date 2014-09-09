@@ -78,6 +78,8 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       } else {
           this.template('js/src/app/app.js', 'src/app/app.js', context);
       }
+
+      this.src.copy('shared/src/app/config.js', 'src/app/config.js');
     },
     test: function () {
       this.dest.mkdir('test');
@@ -94,10 +96,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
     grunt: function () {
       this.dest.mkdir('grunt');
 
-      this.template('shared/gruntfile.js', 'gruntfile.js', {
-          coffee: this.coffee,
-          less: this.less
-      });
+      this.src.copy('shared/gruntfile.js', 'gruntfile.js');
 
       if (this.coffee) {
 
@@ -109,7 +108,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 
       } else {
 
-        this.src.copy('js/grunt/.jshintrc', 'grunt/.jshintrc');
+        this.src.copy('js/grunt/.jslintrc', 'grunt/.jslintrc');
         this.src.copy('js/grunt/jshint.coffee', 'grunt/jshint.coffee');
 
         this.src.copy('js/grunt/aliases.yaml', 'grunt/aliases.yaml');
@@ -118,6 +117,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 
       this.src.copy('shared/grunt/bower.coffee', 'grunt/bower.coffee');
       this.src.copy('shared/grunt/requirejs.coffee', 'grunt/requirejs.coffee');
+      this.src.copy('shared/grunt/connect.coffee', 'grunt/connect.coffee');
     }
 
   },

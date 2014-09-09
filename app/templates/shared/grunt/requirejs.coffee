@@ -1,7 +1,23 @@
 
 module.exports = ( grunt ) ->
-    #if (<%= coffee_enabled %>) {
 
-    #}
-    return {}
+    analysis = require 'rjs-build-analysis'
+
+    build:
+        options:
+            baseUrl: 'src/app'
+            include: 'app'
+            mainConfigFile: 'src/app/config.js'
+            out: 'build/<%=package.name%>.js'
+            optimize: 'none'
+            done: ( done, output ) ->
+                duplicates = analysis.duplicates output
+
+                if duplicates.length > 0
+                    grunt.log.subhead 'Duplicates found in requirejs build: '
+                    grunt.log.warn duplicates
+                    done new Error 'r.js build duplicate modules, please check the excludes option.'
+                else
+                    done()
+
 

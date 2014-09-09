@@ -5,4 +5,4 @@ module.exports =
         transitive:true
 
     configure:
-        rjsConfig: 'build/config.js'
+        rjsConfig: 'src/app/config.js'

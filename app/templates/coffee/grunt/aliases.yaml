@@ -5,6 +5,13 @@ compile:
     - 'lint'
     - 'newer:coffee'
 
+config:
+    - 'bower'
+
 build:
     - 'compile'
-    - 'bower'
+    - 'config'
+    - 'requirejs'
+
+serve:
+    - 'connect'
