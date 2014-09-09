@@ -7,8 +7,8 @@ module.exports =
     compile:
         expand: true
         flatten: false
-        cwd: 'app'
-        dest: 'bin'
+        cwd: 'src/app'
+        dest: 'src/app'
         src: ['*.coffee']
         ext: '.js'
 

@@ -55,26 +55,28 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
         less_enabled: this.less
       };
 
-      this.template('_root_package.json', 'package.json', context);
-      this.template('_root_bower.json', 'bower.json', context);
+      this.template('shared/package.json', 'package.json', context);
+      this.template('shared/bower.json', 'bower.json', context);
 
-      this.template('_root_index.html', 'index.html', context);
-      this.template('_root_index.debug.html', 'index.debug.html', context);
-      this.template('_root_index.release.html', 'index.release.html', context);
+      this.dest.mkdir('build');
+      this.template('shared/build/index.html', 'build/index.html', context);
+      this.dest.mkdir('release');
+      this.template('shared/release/index.html', 'release/index.html', context);
+      this.dest.mkdir('src');
     },
     app: function () {
-      this.dest.mkdir('app');
+      this.dest.mkdir('src/app');
 
       var context = {
           site_name: this.name,
           coffee_enabled: this.coffee,
           less_enabled: this.less
-      }
+      };
 
       if (this.coffee) {
-          this.template('_app_app.coffee', 'app/app.coffee', context);
+          this.template('coffee/src/app/app.coffee', 'src/app/app.coffee', context);
       } else {
-          this.template('_app_app.js', 'app/app.js', context);
+          this.template('js/src/app/app.js', 'src/app/app.js', context);
       }
     },
     test: function () {
@@ -86,36 +88,36 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
           less_enabled: this.less
       };
 
-      this.template('_test_index.test.html', 'test/index.test.html', context);
-      this.template('_test_jasmine.css', 'test/jasmine.css', context);
+      this.template('shared/test/index.html', 'test/index.html', context);
+      this.template('shared/test/jasmine.css', 'test/jasmine.css', context);
     },
     grunt: function () {
       this.dest.mkdir('grunt');
 
-      this.template('_root_gruntfile.js', 'gruntfile.js', {
+      this.template('shared/gruntfile.js', 'gruntfile.js', {
           coffee: this.coffee,
           less: this.less
       });
 
       if (this.coffee) {
 
-        this.src.copy('_grunt_.coffeelintrc', 'grunt/.coffeelintrc');
-        this.src.copy('_grunt_coffee.coffee', 'grunt/coffee.coffee');
-        this.src.copy('_grunt_coffeelint.coffee', 'grunt/coffeelint.coffee');
+        this.src.copy('coffee/grunt/.coffeelintrc', 'grunt/.coffeelintrc');
+        this.src.copy('coffee/grunt/coffee.coffee', 'grunt/coffee.coffee');
+        this.src.copy('coffee/grunt/coffeelint.coffee', 'grunt/coffeelint.coffee');
 
-        this.src.copy('_grunt_aliases.coffee.yaml', 'grunt/aliases.yaml');
+        this.src.copy('coffee/grunt/aliases.yaml', 'grunt/aliases.yaml');
 
       } else {
 
-        this.src.copy('_grunt_.jshintrc', 'grunt/.jshintrc');
-        this.src.copy('_grunt_jshint.coffee', 'grunt/jshint.coffee');
+        this.src.copy('js/grunt/.jshintrc', 'grunt/.jshintrc');
+        this.src.copy('js/grunt/jshint.coffee', 'grunt/jshint.coffee');
 
-        this.src.copy('_grunt_aliases.js.yaml', 'grunt/aliases.yaml');
+        this.src.copy('js/grunt/aliases.yaml', 'grunt/aliases.yaml');
 
       }
 
-      this.src.copy('_grunt_bower.coffee', 'grunt/bower.coffee');
-      this.src.copy('_grunt_requirejs.coffee', 'grunt/requirejs.coffee');
+      this.src.copy('shared/grunt/bower.coffee', 'grunt/bower.coffee');
+      this.src.copy('shared/grunt/requirejs.coffee', 'grunt/requirejs.coffee');
     }
 
   },
