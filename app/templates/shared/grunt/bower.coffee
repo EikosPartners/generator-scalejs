@@ -2,7 +2,8 @@
 module.exports =
 
     options:
-        transitive:true
+        transitive: true
+        baseUrl: 'src'
 
     configure:
-        rjsConfig: 'src/app/config.js'
+        rjsConfig: 'rjsConfig.js'

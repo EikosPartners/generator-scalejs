@@ -57,9 +57,10 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 
       this.template('shared/package.json', 'package.json', context);
       this.template('shared/bower.json', 'bower.json', context);
+      this.template('shared/.bowerrc', '.bowerrc', context);
 
       this.dest.mkdir('build');
-      this.template('shared/build/index.html', 'build/index.html', context);
+      this.template('shared/index.html', 'index.html', context);
       this.dest.mkdir('release');
       this.template('shared/release/index.html', 'release/index.html', context);
       this.dest.mkdir('src');
@@ -79,7 +80,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
           this.template('js/src/app/app.js', 'src/app/app.js', context);
       }
 
-      this.src.copy('shared/src/app/config.js', 'src/app/config.js');
+      this.src.copy('shared/rjsConfig.js', 'rjsConfig.js');
     },
     test: function () {
       this.dest.mkdir('test');
@@ -100,7 +101,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 
       if (this.coffee) {
 
-        this.src.copy('coffee/grunt/.coffeelintrc', 'grunt/.coffeelintrc');
+        this.src.copy('coffee/.coffeelintrc', '.coffeelintrc');
         this.src.copy('coffee/grunt/coffee.coffee', 'grunt/coffee.coffee');
         this.src.copy('coffee/grunt/coffeelint.coffee', 'grunt/coffeelint.coffee');
 
@@ -108,7 +109,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 
       } else {
 
-        this.src.copy('js/grunt/.jslintrc', 'grunt/.jslintrc');
+        this.src.copy('js/.jslintrc', '.jslintrc');
         this.src.copy('js/grunt/jshint.coffee', 'grunt/jshint.coffee');
 
         this.src.copy('js/grunt/aliases.yaml', 'grunt/aliases.yaml');
@@ -118,6 +119,8 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       this.src.copy('shared/grunt/bower.coffee', 'grunt/bower.coffee');
       this.src.copy('shared/grunt/requirejs.coffee', 'grunt/requirejs.coffee');
       this.src.copy('shared/grunt/connect.coffee', 'grunt/connect.coffee');
+      this.src.copy('shared/grunt/uglify.coffee', 'grunt/uglify.coffee');
+      this.src.copy('shared/grunt/copy.coffee', 'grunt/copy.coffee');
     }
 
   },

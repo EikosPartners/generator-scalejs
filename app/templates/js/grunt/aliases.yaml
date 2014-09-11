@@ -11,6 +11,8 @@ build:
     - 'compile'
     - 'config'
     - 'requirejs'
+    - 'uglify'
+    - 'copy'
 
 serve:
     - 'connect'

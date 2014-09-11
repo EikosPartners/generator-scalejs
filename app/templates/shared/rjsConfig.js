@@ -1,15 +1,7 @@
 'use strict';
 /*jshint ignore:start*/
 var require = {
-  shim: {
-
-  },
-  paths: {
-
-  },
-  packages: [
-
-  ],
+  baseUrl: 'src',
   scalejs: {
       extensions: [
 

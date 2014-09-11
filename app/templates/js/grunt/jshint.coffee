@@ -1,6 +1,6 @@
 
 module.exports = ( grunt ) ->
-    options = grunt.file.readJSON 'grunt/.jslintrc'
+    options = grunt.file.readJSON '.jslintrc'
     options.reporter = require 'jshint-stylish'
 
     options: options
