@@ -1,5 +1,5 @@
 {
-  "name": "package",
+  "name": "<%=site_name%>",
   "version": "0.0.0",
   "dependencies": {
     "requirejs": "latest",
