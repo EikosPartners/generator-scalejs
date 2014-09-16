@@ -4,7 +4,7 @@
   "dependencies": {
     "requirejs": "latest",
     "almond": "latest",
-    "scalejs": "lisovin/scalejs#docs"
+    "scalejs": "lisovin/scalejs"
   }
 }
 

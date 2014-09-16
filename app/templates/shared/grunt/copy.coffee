@@ -3,5 +3,5 @@ module.exports =
         expand: true
         flatten: true
         src: ['build/<%= package.name %>.js', 'build/<%= package.name %>.min.js']
-        dest: 'release'
+        dest: 'dist'
         filter: 'isFile'

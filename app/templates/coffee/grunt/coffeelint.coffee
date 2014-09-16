@@ -2,7 +2,7 @@
 module.exports =
 
     options:
-        configFile: 'grunt/.coffeelintrc'
+        configFile: '.coffeelintrc'
 
     compile: ['src/app/**/*.coffee']
 

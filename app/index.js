@@ -59,10 +59,9 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       this.template('shared/bower.json', 'bower.json', context);
       this.template('shared/.bowerrc', '.bowerrc', context);
 
-      this.dest.mkdir('build');
       this.template('shared/index.html', 'index.html', context);
-      this.dest.mkdir('release');
-      this.template('shared/release/index.html', 'release/index.html', context);
+      this.dest.mkdir('build');
+      this.template('shared/build/index.html', 'build/index.html', context);
       this.dest.mkdir('src');
     },
     app: function () {
@@ -80,7 +79,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
           this.template('js/src/app/app.js', 'src/app/app.js', context);
       }
 
-      this.src.copy('shared/rjsConfig.js', 'rjsConfig.js');
+      this.src.copy('shared/rjsconfig.js', 'rjsconfig.js');
     },
     test: function () {
       this.dest.mkdir('test');
@@ -92,7 +91,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       };
 
       this.template('shared/test/index.html', 'test/index.html', context);
-      this.template('shared/test/jasmine.css', 'test/jasmine.css', context);
+      this.template('shared/test/all.tests.js', 'test/all.tests.js', context);
     },
     grunt: function () {
       this.dest.mkdir('grunt');
@@ -121,6 +120,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       this.src.copy('shared/grunt/connect.coffee', 'grunt/connect.coffee');
       this.src.copy('shared/grunt/uglify.coffee', 'grunt/uglify.coffee');
       this.src.copy('shared/grunt/copy.coffee', 'grunt/copy.coffee');
+      this.src.copy('shared/grunt/curl-dir.coffee', 'grunt/curl-dir.coffee');
     }
 
   },
