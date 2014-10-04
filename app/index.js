@@ -58,10 +58,10 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
       this.template('shared/package.json', 'package.json', context);
       this.template('shared/bower.json', 'bower.json', context);
       this.template('shared/.bowerrc', '.bowerrc', context);
+      this.src.copy('shared/rjsconfig.js', 'rjsconfig.js');
+      this.src.copy('shared/.gitattributes', '.gitattributes');
+      this.src.copy('shared/.gitignore', '.gitignore');
 
-      this.template('shared/index.html', 'index.html', context);
-      this.dest.mkdir('build');
-      this.template('shared/build/index.html', 'build/index.html', context);
       this.dest.mkdir('src');
     },
     app: function () {
@@ -79,7 +79,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
           this.template('js/src/app/app.js', 'src/app/app.js', context);
       }
 
-      this.src.copy('shared/rjsconfig.js', 'rjsconfig.js');
+      this.template('shared/src/index.html', 'src/index.html', context);
     },
     test: function () {
       this.dest.mkdir('test');

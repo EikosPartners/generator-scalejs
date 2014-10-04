@@ -1,12 +1,12 @@
-'use strict';
 /*jshint ignore:start*/
-var require = {
+requirejs({
   baseUrl: 'src',
   scalejs: {
-      extensions: [
-
-      ]
+    extensions: [
+    ]
+  },
+  paths: {
   }
-};
+});
 /*jshint ignore:end*/
 

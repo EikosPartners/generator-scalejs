@@ -13,7 +13,7 @@ module.exports =
             port: 9002
             keepalive: true
             debug: true
-            base: [ '.' ]
+            base: [ 'src', '.' ]
 
     release:
         options:

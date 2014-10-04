@@ -6,7 +6,7 @@ module.exports = ( grunt ) ->
     build:
         options:
             name: 'almond'
-            include: 'app/app'
+            include: ['../rjsconfig', 'app/app']
             mainConfigFile: 'rjsconfig.js'
             out: 'build/<%=package.name%>.js'
             optimize: 'none'
