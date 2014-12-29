@@ -21,3 +21,4 @@ module.exports =
             keepalive: true
             debug: true
             base: [ 'dist', '.' ]
+
