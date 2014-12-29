@@ -50,7 +50,7 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
             this.template('bower.json', 'bower.json', this.context);
             this.src.copy('rjsconfig.js', 'rjsconfig.js');
             this.src.copy('.gitattributes', '.gitattributes');
-            this.src.copy('.gitignore', '.gitignore');
+            this.src.copy('.ignore', '.gitignore');
 
             this.dest.mkdir('src');
         },
