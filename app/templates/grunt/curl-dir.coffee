@@ -10,5 +10,5 @@ module.exports = ( grunt ) ->
             'http://jasmine.github.io/2.0/lib/jasmine.js',
             'http://jasmine.github.io/2.0/lib/jasmine.css'
         ]
-        dest: path.resolve process.cwd(), 'lib', 'jasmine'
+        dest: path.resolve process.cwd(), 'bower_components', 'jasmine'
 

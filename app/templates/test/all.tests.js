@@ -1,8 +1,8 @@
 require.config({
     paths: {
-        boot: '../lib/jasmine/boot',
-        'jasmine-html': '../lib/jasmine/jasmine-html',
-        jasmine: '../lib/jasmine/jasmine',
+        boot: '../bower_components/jasmine/boot',
+        'jasmine-html': '../bower_components/jasmine/jasmine-html',
+        jasmine: '../bower_components/jasmine/jasmine',
         '<%=site_name%>': '../build/<%=site_name%>'
     },
     shim: {
