@@ -45,12 +45,12 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 	
 	configuring: {
 		saveLanguagePreference: function () {
-			
+			this.config.set('lang', this.lang);
+			console.log(this.config.get('lang'));
 		},
 		
 		saveAppName: function () {
 			this.config.set('name', this.name);
-			console.log("name is " + this.config.get('name'));
 		}
 	},
 
