@@ -49,10 +49,10 @@ var ScalejsGenerator = yeoman.generators.Base.extend({
 		},
 		
 		saveAppName: function () {
-			generator.config.set('name', this.name);
-			console.log("name is " + generator.config.get('name'));
+			this.config.set('name', this.name);
+			console.log("name is " + this.config.get('name'));
 		}
-	}
+	},
 
     writing: {
         root: function () {
