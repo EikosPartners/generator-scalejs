@@ -38,6 +38,12 @@ module.exports = yeoman.generators.Base.extend({
             this.destinationPath(modulePath + 'bindings/' + this.name + 'Bindings.js'),
             context
         );
+
+        this.fs.copyTpl(
+            this.templatePath('viewmodels/viewmodel.js'),
+            this.destinationPath(modulePath + 'viewmodels/' + this.name + 'ViewModel.js'),
+            context
+        );
     }
 
 });
