@@ -24,12 +24,18 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     writing: function () {
-        var modulePath = 'src/app/',
+        var modulePath = 'src/app/' + this.name + '/',
             context = { name: this.name };
 
         this.fs.copyTpl(
             this.templatePath('module.js'),
-            this.destinationPath(modulePath + this.name + '/' + this.name + 'Module.js'),
+            this.destinationPath(modulePath + this.name + 'Module.js'),
+            context
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('bindings/bindings.js'),
+            this.destinationPath(modulePath + 'bindings/' + this.name + 'Bindings.js'),
             context
         );
     }
