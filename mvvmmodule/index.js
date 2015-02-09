@@ -44,6 +44,19 @@ module.exports = yeoman.generators.Base.extend({
             this.destinationPath(modulePath + 'viewmodels/' + this.name + 'ViewModel.js'),
             context
         );
+
+        this.fs.copyTpl(
+            this.templatePath('views/name.html'),
+            this.destinationPath(modulePath + 'views/' + this.name + '.html'),
+            context
+        );
+
+        this.fs.copyTpl(
+            this.templatePath('styles/style.css'),
+            this.destinationPath(modulePath + 'styles/' + this.name + '.css'),
+            context
+        );
+
     }
 
 });
