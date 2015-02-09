@@ -1,6 +1,4 @@
 'use strict';
-var util = require('util');
-var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 
@@ -26,13 +24,13 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     writing: function () {
-        console.log('this.templatepath = ' + this.templatePath);
-        console.log('this.fs = ' + this.fs);
+        var modulePath = 'src/app/',
+            context = { name: this.name };
 
         this.fs.copyTpl(
             this.templatePath('module.js'),
-            this.destinationPath(this.name + '/' + this.name + 'module.js'),
-            { name: this.name }
+            this.destinationPath(modulePath + this.name + '/' + this.name + 'Module.js'),
+            context
         );
     }
 
