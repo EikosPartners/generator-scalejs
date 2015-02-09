@@ -1,9 +1,9 @@
 /*global define */
 define([
-    'sandbox!<%= name %>',
+    'scalejs.sandbox!<%= name %>',
     'app/<%= name %>/viewmodels/<%= name %>ViewModel',
+    'app/<%= name %>/bindings/<%= name %>Bindings',
     'views!<%= name %>',
-    'bindings!<%= name %>',
     'styles!<%= name %>'
 ], function (
     sandbox,
@@ -22,12 +22,13 @@ define([
             viewModel = <%= name %>ViewModel();
 
         // Register application state for the module.
-        registerStates('root',
+        registerStates('app',
             state('app',
                 state('<%= name %>',
                     onEntry(function () {
                         // Render viewModel using '<%= name %>_template' template 
                         // (defined in <%= name %>.html) and show it in the `root` region.
+                        <%= name %>.text('Hello World from <%= name %>!');
                         root(template('<%= name %>_template', viewModel));
                     }))));
     };
