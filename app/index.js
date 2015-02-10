@@ -57,6 +57,7 @@ module.exports = yeoman.generators.Base.extend({
 
             this.template('package.json', 'package.json', this.context);
             this.template('bower.json', 'bower.json', this.context);
+            this.template('readme.md', 'readme.md', this.context);
             this.src.copy('rjsconfig.js', 'rjsconfig.js');
             this.src.copy('.gitattributes', '.gitattributes');
             this.src.copy('.ignore', '.gitignore');
@@ -123,7 +124,7 @@ module.exports = yeoman.generators.Base.extend({
         configure: function () {
             this.spawnCommand('grunt', ['config']);
         },
-        
+
         message: function () {
             this.log('');
             this.log('Generation Finished!')
