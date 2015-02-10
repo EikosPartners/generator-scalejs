@@ -114,6 +114,13 @@ var util = require('util'),
 
         install: function () {
             this.installDependencies();
+        },
+
+        end: function () {
+            this.spawnCommand('grunt', ['config']);
+
+            this.log("Yo has finished making your application");
+            this.log("Run 'grunt debug' to launch a local server");
         }
 
     });
