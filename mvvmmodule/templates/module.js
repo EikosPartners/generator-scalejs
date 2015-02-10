@@ -2,7 +2,7 @@
 define([
     'scalejs.sandbox!<%= name %>',
     'app/<%= name %>/viewmodels/<%= name %>ViewModel',
-    'app/<%= name %>/bindings/<%= name %>Bindings',
+    'bindings!<%= name %>',
     'views!<%= name %>'
 ], function (
     sandbox,
@@ -28,7 +28,7 @@ define([
                         // Render viewModel using '<%= name %>_template' template 
                         // (defined in <%= name %>.html) and show it in the `root` region.
                         <%= name %>.text('Hello World from <%= name %>!');
-                        root(template('<%= name %>_template', viewModel));
+                        root(template('<%= name %>_template', <%= name %>));
                     }))));
     };
 });
