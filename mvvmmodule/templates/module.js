@@ -18,7 +18,7 @@ define([
             state = sandbox.state.builder.state,
             onEntry = sandbox.state.builder.onEntry,
             // vars
-            viewModel = <%= name %>ViewModel();
+            <%= name %> = <%= name %>ViewModel(sandbox);
 
         // Register application state for the module.
         registerStates('root',
