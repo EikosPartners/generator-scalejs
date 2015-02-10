@@ -53,17 +53,26 @@ module.exports = yeoman.generators.Base.extend({
 
     },
 
-    install: function () {
-        this.bowerInstall(['lisovin/scalejs.mvvm#dev'], {'save': true});
-        this.bowerInstall(['lisovin/scalejs.statechart-scion#dev'], {'save': true});
-        this.spawnCommand('grunt', ['config']);
+    install: {
+
+        packages: function () {
+            this.bowerInstall(['lisovin/scalejs.mvvm#dev'], {'save': true});
+            this.bowerInstall(['lisovin/scalejs.statechart-scion#dev'], {'save': true});
+        }
     },
 
-    end: function () {
-        this.log('');
-        this.log('Generation Finished!')
-        this.log("Run 'grunt debug' to launch a local server");
-        this.log("Don't forget to include this module somewhere!")
+    end: {
+        
+        configure: function () {
+            this.spawnCommand('grunt', ['config']);
+        },
+        
+        message: function () {
+            this.log('');
+            this.log('Generation Finished!')
+            this.log("Run 'grunt debug' to launch a local server");
+            this.log("Don't forget to include this module somewhere!")
+        }
     }
 
 });

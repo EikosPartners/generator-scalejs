@@ -112,15 +112,23 @@ module.exports = yeoman.generators.Base.extend({
 
     },
 
-    install: function () {
-        this.installDependencies();
-        this.spawnCommand('grunt', ['config']);
+    install: {
+        packages: function () {
+            this.installDependencies();
+        }
     },
 
-    end: function () {
-        this.log('');
-        this.log('Generation Finished!')
-        this.log("Run 'grunt debug' to launch a local server");
+    end: {
+
+        configure: function () {
+            this.spawnCommand('grunt', ['config']);
+        },
+        
+        message: function () {
+            this.log('');
+            this.log('Generation Finished!')
+            this.log("Run 'grunt debug' to launch a local server");
+        }
     }
 
 });
