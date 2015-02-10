@@ -119,7 +119,6 @@ var util = require('util'),
         end: function () {
             this.spawnCommand('grunt', ['config']);
 
-            this.log("Yo has finished making your application");
             this.log("Run 'grunt debug' to launch a local server");
         }
 

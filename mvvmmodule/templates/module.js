@@ -3,8 +3,7 @@ define([
     'scalejs.sandbox!<%= name %>',
     'app/<%= name %>/viewmodels/<%= name %>ViewModel',
     'app/<%= name %>/bindings/<%= name %>Bindings',
-    'views!<%= name %>',
-    'styles!<%= name %>'
+    'views!<%= name %>'
 ], function (
     sandbox,
     <%= name %>ViewModel
@@ -22,7 +21,7 @@ define([
             viewModel = <%= name %>ViewModel();
 
         // Register application state for the module.
-        registerStates('app',
+        registerStates('root',
             state('app',
                 state('<%= name %>',
                     onEntry(function () {
