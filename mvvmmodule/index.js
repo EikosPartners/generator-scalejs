@@ -51,12 +51,6 @@ module.exports = yeoman.generators.Base.extend({
             context
         );
 
-        this.fs.copyTpl(
-            this.templatePath('styles/style.css'),
-            this.destinationPath(modulePath + 'styles/' + this.name + '.css'),
-            context
-        );
-
     },
 
     install: function () {
