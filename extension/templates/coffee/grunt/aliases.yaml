@@ -1,0 +1,26 @@
+lint:
+    - 'coffeelint:extension'
+
+compile:
+    - 'lint'
+    - 'newer:coffee:extension'
+
+config:
+    - 'bower'
+
+build:
+    - 'compile'
+    - 'config'
+    - 'requirejs'
+    - 'uglify'
+
+release:
+    - 'build'
+    - 'copy'
+
+test:
+    - 'coffeelint:test'
+    - 'newer:coffee:test'
+    - 'if-missing:curl-dir:jasmine'
+    - 'connect:test'
+
