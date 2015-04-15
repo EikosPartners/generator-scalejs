@@ -2,7 +2,23 @@
 var util = require('util'),
     path = require('path'),
     yeoman = require('yeoman-generator'),
-    yosay = require('yosay');
+    yosay = require('yosay'),
+    _ = require('lodash'),
+    fs = require('fs'),
+    langs = [
+        {
+            name: 'javascript',
+            extension: '.js'
+        },
+        {
+            name: 'coffeescript',
+            extension: '.coffee'
+        }/*,
+        {
+            name: 'ECMAscript 6',
+            extension: '.es6'
+        }*/
+    ];
 
 module.exports = yeoman.generators.Base.extend({
     initializing: function () {
@@ -14,11 +30,6 @@ module.exports = yeoman.generators.Base.extend({
             prompts = [{
                 name: 'name',
                 message: 'What is the name of your application?'
-            },{
-                type: 'list',
-                name: 'lang',
-                message: 'Would you like to use js or coffee?',
-                choices: ['js', 'coffee']
             }];
 
         // Have Yeoman greet the user.
@@ -28,14 +39,8 @@ module.exports = yeoman.generators.Base.extend({
 
         this.prompt(prompts, function (props) {
             this.name = props.name;
-            this.lang = props.lang;
-
-            this.coffee = props.lang === 'coffee';
-            this.js = props.lang === 'js';
-
             this.context = {
                 site_name: this.name,
-                coffee_enabled: this.coffee
             };
 
             done();
@@ -53,64 +58,34 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
     writing: {
-        root: function () {
-
-            this.template('package.json', 'package.json', this.context);
-            this.template('bower.json', 'bower.json', this.context);
-            this.template('readme.md', 'readme.md', this.context);
-            this.src.copy('rjsconfig.js', 'rjsconfig.js');
-            this.src.copy('.gitattributes', '.gitattributes');
-            this.src.copy('.ignore', '.gitignore');
-
-            this.dest.mkdir('src');
-        },
-        app: function () {
-            this.dest.mkdir('src/app');
-
-            if (this.coffee) {
-                this.template('src/app/app.coffee', 'src/app/app.coffee', this.context);
-            } else {
-                this.template('src/app/app.js', 'src/app/app.js', this.context);
+        all: function () {
+            function getFiles(dir, files_) {
+                files_ = files_ || [];
+                var files = fs.readdirSync(dir);
+                for (var i in files) {
+                    var name = dir + '/' + files[i];
+                    if (fs.statSync(name)
+                        .isDirectory()) {
+                        getFiles(name, files_);
+                    } else {
+                        files_.push(name);
+                    }
+                }
+                return files_;
             }
 
-            this.template('src/index.html', 'src/index.html', this.context);
-        },
-        test: function () {
-            this.dest.mkdir('test');
-
-            this.template('test/index.html', 'test/index.html', this.context);
-            this.template('test/all.tests.js', 'test/all.tests.js', this.context);
-        },
-        grunt: function () {
-            this.dest.mkdir('grunt');
-
-            this.src.copy('gruntfile.js', 'gruntfile.js');
-
-            if (this.coffee) {
-
-                this.src.copy('.coffeelintrc', '.coffeelintrc');
-                this.src.copy('grunt/coffee.coffee', 'grunt/coffee.coffee');
-                this.src.copy('grunt/coffeelint.coffee', 'grunt/coffeelint.coffee');
-
-                this.src.copy('grunt/aliases.coffee.yaml', 'grunt/aliases.yaml');
-
-            } else {
-
-                this.src.copy('.jslintrc', '.jslintrc');
-                this.src.copy('grunt/jshint.coffee', 'grunt/jshint.coffee');
-
-                this.src.copy('grunt/aliases.js.yaml', 'grunt/aliases.yaml');
-
-            }
-
-            this.src.copy('grunt/bower.coffee', 'grunt/bower.coffee');
-            this.src.copy('grunt/requirejs.coffee', 'grunt/requirejs.coffee');
-            this.src.copy('grunt/connect.coffee', 'grunt/connect.coffee');
-            this.src.copy('grunt/uglify.coffee', 'grunt/uglify.coffee');
-            this.src.copy('grunt/copy.coffee', 'grunt/copy.coffee');
-            this.src.copy('grunt/curl-dir.coffee', 'grunt/curl-dir.coffee');
+            getFiles(this.sourceRoot())
+            .forEach(function (fileName) {
+                fileName = fileName.replace(this.sourceRoot(), '');
+                this.fs.copyTpl(
+                    this.templatePath(fileName),
+                    this.destinationPath(fileName),
+                    this.context
+                );
+            }.bind(this));
+            // To stop error when running bower install initially
+            this.fs.move(this.destinationPath('.bowerrc'), this.destinationPath('.temp_bowerrc'));
         }
-
     },
 
     install: {
@@ -120,6 +95,12 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     end: {
+
+        hookToBower: function () {
+            fs.rename('.temp_bowerrc', '.bowerrc', function (err) {
+                if (err) throw err;
+                });
+        },
 
         configure: function () {
             this.spawnCommand('grunt', ['config']);
