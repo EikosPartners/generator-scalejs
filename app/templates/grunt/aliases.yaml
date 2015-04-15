@@ -1,0 +1,28 @@
+lint:
+    - 'newer:jshint'
+
+compile:
+    - 'lint'
+
+config:
+    - 'bower'
+
+build:
+    - 'compile'
+    - 'config'
+    - 'requirejs'
+    - 'uglify'
+
+release:
+    - 'build'
+    - 'copy'
+
+test:
+    - 'if-missing:curl-dir:jasmine'
+    - 'connect:test'
+
+debug:
+    - 'connect:debug'
+
+debug-release:
+    - 'connect:release'
