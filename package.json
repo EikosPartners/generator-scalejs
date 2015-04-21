@@ -1,14 +1,13 @@
 {
   "name": "generator-scalejs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yeoman generator for scalejs",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "tsukumo-eikos/generator-scalejs",
+  "repository": "EikosPartners/generator-scalejs",
   "author": {
-    "name": "tsukumo",
-    "email": "tsukumo.code+eikos@gmail.com",
-    "url": "https://github.com/tsukumo-eikos"
+    "name": "Eikos Partners",
+    "url": "https://github.com/EikosPartners"
   },
   "engines": {
     "node": ">=0.10.0"
