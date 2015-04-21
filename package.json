@@ -16,7 +16,9 @@
     "test": "mocha"
   },
   "files": [
-    "app"
+    "app",
+    "extension",
+    "mvvmmodule"
   ],
   "keywords": [
     "yeoman-generator",
