@@ -88,7 +88,7 @@ module.exports = yeoman.generators.Base.extend({
             jsonifiedParsedConfig = eval('(' + escodegen.generate(parsedConfig) + ')');
             mergedConfig = _.merge(additionalConfig, jsonifiedParsedConfig, function(a, b) {
                 if (_.isArray(a)) {
-                    return a.concat(b);
+                    return _.uniq(a.concat(b));
                 }
             });
             parsedFile.body[0].expression.arguments[0] = esprima.parse('(' + JSON.stringify(mergedConfig) + ')').body[0].expression
@@ -107,8 +107,8 @@ module.exports = yeoman.generators.Base.extend({
     install: {
 
         packages: function () {
-            this.bowerInstall(['lisovin/scalejs.mvvm#dev'], {'save': true});
-            this.bowerInstall(['lisovin/scalejs.statechart-scion#dev'], {'save': true});
+            this.bowerInstall(['EikosPartners/scalejs.mvvm'], {'save': true});
+            this.bowerInstall(['EikosPartners/scalejs.statechart-scion'], {'save': true});
         }
     },
 
