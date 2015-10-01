@@ -2,6 +2,10 @@
   "name": "<%=site_name%>",
   "version": "0.0.0",
   "description": "A generator for modular scalejs applications",
+  "scripts": {
+    "test"  : "karma start test/karma_config/karma.conf.coverage.js",
+    "test-watch" : "karma start test/karma_config/karma.conf.js"
+  },
   "repository": {
     "private": true
   },
@@ -25,6 +29,16 @@
     "load-grunt-config": "~0.13.1",
     "rjs-build-analysis": "0.0.3",
     "rjs-extender": "git://github.com/EikosPartners/rjs-extender",
-    "time-grunt": "~1.0.0"
+    "time-grunt": "~1.0.0",
+    "karma": "^0.13.10",
+    "chai": "~3.0.0",
+    "mocha": "~2.2.5",    
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-coverage": "^0.5.2",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-requirejs": "^0.2.2",
+    "phantomjs": "^1.9.16"
   }
 }

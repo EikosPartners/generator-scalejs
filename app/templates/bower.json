@@ -4,7 +4,8 @@
   "dependencies": {
     "requirejs": "latest",
     "almond": "latest",
-    "scalejs": "lisovin/scalejs"
+    "scalejs": "lisovin/scalejs",
+    "scalejs.metadata-factory": "EikosPartners/scalejs.metadata-factory"
   }
 }
 
