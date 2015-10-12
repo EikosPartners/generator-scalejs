@@ -187,7 +187,9 @@ module.exports = yeoman.generators.Base.extend({
 
         packages: function () {
             this.bowerInstall(['EikosPartners/scalejs.mvvm'], {'save': true});
-            this.bowerInstall(['EikosPartners/scalejs.statechart-scion'], {'save': true});
+            if( this.metadata === 'Statechart driven' ){
+                this.bowerInstall(['EikosPartners/scalejs.statechart-scion'], {'save': true});
+            }
             this.bowerInstall(['EikosPartners/scalejs.reactive'], {'save': true});
             this.bowerInstall(['chai'], {'save-dev':true});
             this.bowerInstall(['mocha'], {'save-dev':true});
