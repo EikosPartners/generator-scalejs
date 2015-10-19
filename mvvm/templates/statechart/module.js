@@ -1,4 +1,4 @@
-/*global define */
+/*global define,sandbox,<%= name %>ViewModel */
 define([
     'scalejs.sandbox!<%= name %>',
     'app/<%= name %>/viewmodels/<%= name %>ViewModel',

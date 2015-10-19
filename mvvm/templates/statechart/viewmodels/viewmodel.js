@@ -1,4 +1,4 @@
-/*global define */
+/*global define,sandbox */
 define([
     'scalejs.sandbox!<%= name %>',
 ], function (
