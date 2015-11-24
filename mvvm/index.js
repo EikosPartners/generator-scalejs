@@ -82,7 +82,7 @@ module.exports = yeoman.generators.Base.extend({
             var extension;
             if( this.metadata === 'Metadata driven' )
             {
-                extension = 'scalejs.metadata-factory';
+                extension = 'scalejs.metadataFactory';
             }
             else
             {
