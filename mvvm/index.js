@@ -17,7 +17,7 @@ module.exports = yeoman.generators.Base.extend({
             message: 'What is the name of your module?'
         },{
             type: 'list',
-            choices: [ 'Statechart driven', 'Metadata driven' ],
+            choices: [ 'PJSON driven', 'Statechart driven' ],
             name: 'metadata',
             message: 'What kind of module would you like to create?'
         }];
@@ -31,9 +31,9 @@ module.exports = yeoman.generators.Base.extend({
 
     writing: {
         makeModule: function () {
-            console.log( this.metadata );
+
             //Set root to correct template
-            if( this.metadata === 'Metadata driven' )
+            if( this.metadata === 'PJSON driven' )
             {
                 this.sourceRoot( this.templatePath( 'metagen' ) );
             }
@@ -77,10 +77,31 @@ module.exports = yeoman.generators.Base.extend({
             
             
         },
+        updateModules: function() {
+            if( this.metadata === 'PJSON driven' ){
+                var hook = "/*========Yeoman Hook=======*/",
+                modulePath = './src/app/modules.js',
+                module = this.readFileAsString(modulePath),
+                insertModule = "    'scalejs!application/app/"+this.name+"/"+this.name+"Module'",
+                slug = module.replace(/(\r\n|\n|\r)/gm,"");
+                
+                if(module.indexOf(hook)===-1){
+                    console.log("Yeoman Hook missing from modules.js");
+                }
+                else{
+                    // checks if there are no existing modules in tests array
+                    if ((slug.indexOf('/*========Yeoman Hook=======*/],')===-1)){
+                        insertModule += ',';
+                    }
+                    this.conflicter.force = true;
+                    this.write(modulePath, module.replace(hook, hook + '\n' + insertModule));
+                }
+            }
+        },
         updateConfig: function () {
             //Add statechart and mvvm extensions and mappings to the rjs config
             var extension;
-            if( this.metadata === 'Metadata driven' )
+            if( this.metadata === 'PJSON driven' )
             {
                 extension = 'scalejs.metadataFactory';
             }

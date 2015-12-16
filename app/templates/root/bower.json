@@ -5,7 +5,7 @@
     "requirejs": "latest",
     "almond": "latest",
     "scalejs": "lisovin/scalejs",
-    "scalejs.metadataFactory": "EikosPartners/scalejs.metadataFactory"
+    "scalejs.metadataFactory": "EikosPartners/scalejs.metadataFactory#develop"
   }
 }
 
