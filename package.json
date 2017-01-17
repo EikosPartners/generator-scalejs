@@ -1,42 +1,34 @@
 {
   "name": "generator-scalejs",
-  "version": "0.0.5",
-  "description": "Yeoman generator for scalejs",
-  "license": "MIT",
+  "version": "2.0.0",
+  "description": "A yo generator for scalejs 2.0",
   "main": "app/index.js",
-  "repository": "EikosPartners/generator-scalejs",
-  "author": {
-    "name": "Eikos Partners",
-    "url": "https://github.com/EikosPartners"
-  },
-  "engines": {
-    "node": ">=0.10.0"
-  },
   "scripts": {
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
-    "app",
-    "extension",
-    "mvvm"
+    "app"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EikosPartners/generator-scalejs.git"
+  },
   "keywords": [
     "yeoman-generator",
     "scalejs",
     "yo"
   ],
+  "author": {
+    "name": "Eikos Partners",
+    "url": "https://github.com/EikosPartners"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EikosPartners/generator-scalejs/issues"
+  },
+  "homepage": "https://github.com/EikosPartners/generator-scalejs#readme",
   "dependencies": {
-    "chalk": "^0.5.0",
-    "escodegen": "^1.6.1",
-    "esprima": "^2.1.0",
-    "lodash": "^3.6.0",
-    "yeoman-generator": "^0.18.8",
-    "yosay": "^0.3.0"
-  },
-  "devDependencies": {
-    "mocha": "*"
-  },
-  "peerDependencies": {
-    "yo": ">=1.0.0"
+    "yeoman-generator": "^1.0.1",
+    "yosay": "^1.2.1"
   }
 }
