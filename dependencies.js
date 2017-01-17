@@ -1,0 +1,21 @@
+module.exports = [
+    "autoprefixer-loader",
+    "babel-core",
+    "babel-loader",
+    "babel-polyfill",
+    "babel-preset-es2015",
+    "body-parser",
+    "css-loader",
+    "express",
+    "html-loader",
+    "pjson-loader",
+    "sass-loader",
+    "scalejs.metadatafactory-common",
+    "scalejs.mvvm",
+    "source-map-loader",
+    "style-loader",
+    "url-loader",
+    "webpack",
+    "webpack-dev-middleware",
+    "webpack-hot-middleware"
+];

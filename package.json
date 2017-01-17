@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/EikosPartners/generator-scalejs#readme",
   "dependencies": {
+    "ncp": "^2.0.0",
     "yeoman-generator": "^1.0.1",
     "yosay": "^1.2.1"
   }
