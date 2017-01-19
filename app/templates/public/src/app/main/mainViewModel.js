@@ -1,10 +1,10 @@
 import { observable } from 'knockout';
-import dataservice from 'dataservice';
+import { ajax } from 'dataservice';
 
 export default function main() {
-    let metadata = observable();
+    const metadata = observable();
 
-    dataservice.ajax("/pjson?name=pages/helloworld").then((data) => {
+    ajax('/pjson?name=pages/helloworld').then((data) => {
         metadata(data);
     });
 

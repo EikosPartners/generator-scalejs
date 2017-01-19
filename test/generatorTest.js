@@ -15,6 +15,9 @@ describe('GeneratorTest', () => {
                 assert.file(path.resolve(dir, 'server.js'));
                 assert.file(path.resolve(dir, 'webpack.config.js'));
 
+                // Assert eslint config created.
+                assert.file(path.resolve(dir, '.eslintrc.js'));
+
                 // Assert server and public directories exist.
                 assert.file(path.resolve(dir, 'public/'));
                 assert.file(path.resolve(dir, 'server/'));

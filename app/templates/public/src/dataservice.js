@@ -17,21 +17,22 @@ function ajax(request, callback) {
 // request.options can specify the options.type (GET/POST/ect), and options.data to send in request.
 function _ajax(request, callback) {
     // Extract options and url from request:
-    request = request || baseUri; // Default for request when falsy
-    const isRequestString = (typeof request === 'string' || request instanceof String);
-    const url = (isRequestString ? request : request.url || '/') + (request.uri || '');
-    const options = (!isRequestString && request.options) || {}; // use request.options if exists, otherwise use {}
-    const type = (options.type || 'GET').toUpperCase();
-    const data = request.data || options.data;
+    let req = request || baseUri; // Default for request when falsy
+    const isRequestString = (typeof req === 'string' || req instanceof String),
+        url = (isRequestString ? req : req.url || '/') + (req.uri || ''),
+        // use request.options if exists, otherwise use {}
+        options = (!isRequestString && req.options) || {},
+        type = (options.type || 'GET').toUpperCase(),
+        data = req.data || req.data;
 
     // Create request:
-    request = new XMLHttpRequest();
+    req = new XMLHttpRequest();
 
-    request.onreadystatechange = function () {
+    req.onreadystatechange = function () {
         // Check to make sure request is completed, otherwise ignore:
-        if (this.readyState == XMLHttpRequest.DONE) {
+        if (this.readyState === XMLHttpRequest.DONE) {
             let response = this.response;
-            if (this.status == 200) {
+            if (this.status === 200) {
                 // Request was successful, now parse:
                 if (this.getResponseHeader('Content-Type').includes('application/json')) {
                     try {
@@ -59,12 +60,12 @@ function _ajax(request, callback) {
     };
 
     // Open and send request:
-    request.open(type, url, true);
+    req.open(type, url, true);
 
     // Set options:
-    if (type !== 'GET') { request.setRequestHeader('Content-Type', 'application/json'); }
+    if (type !== 'GET') { req.setRequestHeader('Content-Type', 'application/json'); }
 
-    request.send(type !== 'GET' && JSON.stringify(data));
+    req.send(type !== 'GET' && JSON.stringify(data));
 }
 
 export {

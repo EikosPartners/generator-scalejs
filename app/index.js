@@ -1,9 +1,10 @@
 // Scalejs App generator
-var Generator = require('yeoman-generator'),
+let Generator = require('yeoman-generator'),
     yosay = require('yosay'),
     path = require('path'),
     ncp = require('ncp'),
-    fs = require('fs');
+    fs = require('fs'),
+    npmAddScript = require('npm-add-script');
 
 const NPM_DEPENDENCIES = require('../dependencies'),
       EXTRAS_PROFILE = "Profile Services",
@@ -45,17 +46,31 @@ module.exports = class extends Generator {
     // Configuring - Run npm init if user wants to generate package.json
     configuring() {
         return new Promise( (resolve, reject) => {
-            if (this.shouldCreatePackageJSON) {
-                console.log("\nBe sure to put server.js as the entry point or rename server.js to your entry point after completion.\n");
-                var npmCmd = this.spawnCommand('npm', ['init']);
+            let shouldCreate = new Promise( (resolve, reject) => {
+                if (this.shouldCreatePackageJSON) {
+                    console.log("\nBe sure to put server.js as the entry point or rename server.js to your entry point after completion.\n");
+                    var npmCmd = this.spawnCommand('npm', ['init']);
 
-                // Wait for the npm init command to finish before resolving.
-                npmCmd.on('close', (code) => {
+                    // Wait for the npm init command to finish before resolving.
+                    npmCmd.on('close', (code) => {
+                        resolve();
+                    });
+                } else {
                     resolve();
-                });
-            } else {
+                }
+            }).then( () => {
+                // Try to add the linting script to the existing or newly created package.json.
+                try {
+                    npmAddScript({ key: "lint", value: "eslint ./public/src" });
+                    npmAddScript({ key: "lint-all", value: "eslint ."});
+                } catch (e) {
+                    if (e.code === 'ENOENT') {
+                        console.log("There was an error trying to add a lint script to your package.json as it does not exist! You can manually add it later.");
+                    }
+                }
+
                 resolve();
-            }
+            });
         });
     }
 
