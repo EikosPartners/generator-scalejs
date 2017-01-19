@@ -6,7 +6,7 @@ let Generator = require('yeoman-generator'),
     fs = require('fs'),
     npmAddScript = require('npm-add-script');
 
-const NPM_DEPENDENCIES = require('../dependencies'),
+const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
       EXTRAS_DATASERVICE = "Custom Data Service",
       EXTRAS_FONT_ICON = "Font Icon",
