@@ -1,10 +1,11 @@
 {
   "name": "generator-scalejs",
-  "version": "2.0.0",
-  "description": "A yo generator for scalejs 2.0",
+  "version": "0.0.1",
+  "description": "A Yeoman generator for scalejs, a robust JavaScript framework for building versatile web and mobile applications in Visual Studio.",
   "main": "app/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "prepublish": "mocha"
   },
   "files": [
     "app",
