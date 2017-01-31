@@ -21,7 +21,7 @@ module.exports = [
     "source-map-loader",
     "style-loader",
     "url-loader",
-    "webpack",
+    "webpack@^1.13.1",
     "webpack-dev-middleware",
     "webpack-hot-middleware"
 ];
