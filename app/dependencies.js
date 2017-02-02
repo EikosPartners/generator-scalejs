@@ -16,6 +16,7 @@ module.exports = [
     "html-loader",
     "pjson-loader",
     "sass-loader",
+    "scalejs.hot-loader",
     "scalejs.metadatafactory-common",
     "scalejs.mvvm",
     "source-map-loader",

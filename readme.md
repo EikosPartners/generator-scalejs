@@ -6,7 +6,7 @@
 ## Usage
 Install `yo` and the generator package `generator-scalejs`.
 
-```npm 
+```npm
 install -g yo generator-scalejs
 ```
 
@@ -28,7 +28,6 @@ The generator gives you the option of creating a package.json during the process
 * [profile](#profile)
 * [dataservice](#dataservice)
 * [font_icon](#font_icon)
-* [hmr](#hmr)
 
 
 ### Profile
@@ -47,10 +46,4 @@ yo scalejs:dataservice
 Generates the files necessary for font icons.
 ```
 yo scalejs:font_icon
-```
-
-### HMR
-Generates the files necessary for implementing hot module reloading.
-```
-yo scalejs:hmr
 ```

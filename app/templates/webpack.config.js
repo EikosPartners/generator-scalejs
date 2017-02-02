@@ -16,6 +16,7 @@ module.exports = {
             'scalejs.sandbox': path.join(__dirname, 'node_modules/scalejs/dist/scalejs.sandbox.js'),
 
             // extensions
+            'hotRender': path.join(__dirname, 'public/src/hotRender.js')
         }
     },
     output: {
@@ -23,19 +24,14 @@ module.exports = {
         publicPath: '/build/',
         filename: '[name].bundle.js'
     },
-    _resolveLoader: {
-        alias: {
-            'hot-loader': path.join(__dirname, 'public/loaders/hot-loader')
-        }
-    },
     module: {
         preLoaders: [
-            /*{
+            {
                 test: [
                     /Module\.js$/
                 ],
-                loader: 'hot-loader'
-            },*/
+                loader: 'scalejs.hot-loader'
+            },
             {
                 test: [
                     path.join(__dirname, 'node_modules/scalejs')

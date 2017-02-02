@@ -9,8 +9,7 @@ let Generator = require('yeoman-generator'),
 const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
       EXTRAS_DATASERVICE = "Custom Data Service",
-      EXTRAS_FONT_ICON = "Font Icon",
-      EXTRAS_HMR = "Hot Module Reloading";
+      EXTRAS_FONT_ICON = "Font Icon";
 
 module.exports = class extends Generator {
     // Set up prompts
@@ -23,7 +22,7 @@ module.exports = class extends Generator {
                 type: "checkbox",
                 name: "extras",
                 message: "Which additional services would you like added?",
-                choices: [EXTRAS_PROFILE, EXTRAS_DATASERVICE, EXTRAS_FONT_ICON, EXTRAS_HMR]
+                choices: [EXTRAS_PROFILE, EXTRAS_DATASERVICE, EXTRAS_FONT_ICON]
             },
             {
                 type: "confirm",
@@ -83,7 +82,7 @@ module.exports = class extends Generator {
             // Determine whice extra services the user chose and copy accordingly.
             if (this.extras.includes(EXTRAS_PROFILE)) {
                 // Invoke the profile generator.
-                this.composeWith('scalejs:profile', { fromMain: true });
+                //this.composeWith('scalejs:profile', { fromMain: true });
             }
 
             if (this.extras.includes(EXTRAS_DATASERVICE)) {
@@ -94,11 +93,6 @@ module.exports = class extends Generator {
             if (this.extras.includes(EXTRAS_FONT_ICON)) {
                 // Invoke font icon generator.
                 //this.composeWith('scalejs:font_icon', { fromMain: true });
-            }
-
-            if (this.extras.includes(EXTRAS_HMR)) {
-                // Invoke hmr generator.
-                //this.composeWith('scalejs:hmr', { fromMain: true });
             }
 
             ncp(this.sourceRoot(), this.destinationRoot(), (err) => {
