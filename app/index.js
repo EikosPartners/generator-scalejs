@@ -9,7 +9,8 @@ let Generator = require('yeoman-generator'),
 const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
       EXTRAS_DATASERVICE = "Custom Data Service",
-      EXTRAS_FONT_ICON = "Font Icon";
+      EXTRAS_FONT_ICON = "Font Icon",
+      EXTRAS_TESTING= "Karma Tests";
 
 module.exports = class extends Generator {
     // Set up prompts
@@ -22,7 +23,7 @@ module.exports = class extends Generator {
                 type: "checkbox",
                 name: "extras",
                 message: "Which additional services would you like added?",
-                choices: [EXTRAS_PROFILE, EXTRAS_DATASERVICE, EXTRAS_FONT_ICON]
+                choices: [EXTRAS_PROFILE, EXTRAS_DATASERVICE, EXTRAS_FONT_ICON, EXTRAS_TESTING]
             },
             {
                 type: "confirm",
@@ -62,6 +63,11 @@ module.exports = class extends Generator {
                 try {
                     npmAddScript({ key: "lint", value: "eslint ./public/src" });
                     npmAddScript({ key: "lint-all", value: "eslint ."});
+
+                    if (this.extras.includes(EXTRAS_TESTING)) {
+                        npmAddScript({ key: "test", value: "karma start test/karma_config/karma.config.js --timeout 15000" , force: true});
+                    }
+
                 } catch (e) {
                     if (e.code === 'ENOENT') {
                         console.log("There was an error trying to add a lint script to your package.json as it does not exist! You can manually add it later.");
@@ -111,7 +117,14 @@ module.exports = class extends Generator {
     install() {
         if (!this.options['skip-install']) {
             console.log("\nInstalling npm dependencies...\n");
-            return this.npmInstall(NPM_DEPENDENCIES, { 'save': true});
+
+            let deps = NPM_DEPENDENCIES.default_dependencies;
+
+            if (this.extras.includes(EXTRAS_TESTING)) {
+                deps.push.apply(deps, NPM_DEPENDENCIES.test_dependencies);
+            }
+
+            return this.npmInstall(deps, { 'save': true});
         }
     }
 
