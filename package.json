@@ -1,42 +1,63 @@
 {
   "name": "generator-scalejs",
-  "version": "0.0.5",
-  "description": "A Yeoman generator for scalejs, a robust JavaScript framework for building versatile web and mobile applications in Visual Studio.",
-  "main": "app/index.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "prepublish": "mocha"
+    "test": "karma start test/karma_config/karma.config.js --timeout 15000",
+    "lint": "eslint ./public/src",
+    "lint-all": "eslint ."
   },
-  "files": [
-    "app",
-    "profile"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EikosPartners/generator-scalejs.git"
   },
-  "keywords": [
-    "yeoman-generator",
-    "scalejs",
-    "yo"
-  ],
-  "author": {
-    "name": "Eikos Partners",
-    "url": "https://github.com/EikosPartners"
-  },
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/EikosPartners/generator-scalejs/issues"
   },
   "homepage": "https://github.com/EikosPartners/generator-scalejs#readme",
   "dependencies": {
-    "ncp": "^2.0.0",
-    "npm-add-script": "^1.1.0",
-    "yeoman-generator": "^1.0.1",
-    "yosay": "^1.2.1"
-  },
-  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "body-parser": "^1.16.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "cors": "^2.8.1",
+    "css-loader": "^0.26.1",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-import-resolver-webpack": "^0.8.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "express": "^4.14.1",
+    "html-loader": "^0.4.4",
+    "karma": "^1.4.1",
+    "karma-chai": "^0.1.0",
+    "karma-chai-as-promised": "^0.1.2",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-debug": "^0.1.2",
+    "karma-mocha-reporter": "^2.2.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.2",
     "mocha": "^3.2.0",
-    "yeoman-test": "^1.6.0"
+    "pjson-loader": "^2.0.0",
+    "sass-loader": "^4.1.1",
+    "scalejs.hot-loader": "^1.0.1",
+    "scalejs.metadatafactory-common": "^1.0.172",
+    "scalejs.mvvm": "^1.0.3",
+    "source-map-loader": "^0.1.6",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.14.0",
+    "webpack-dev-middleware": "^1.10.0",
+    "webpack-hot-middleware": "^2.16.1"
   }
 }
