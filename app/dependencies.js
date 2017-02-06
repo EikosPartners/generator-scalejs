@@ -5,6 +5,7 @@ const default_dependencies = [
     "babel-polyfill",
     "babel-preset-es2015",
     "body-parser",
+    "cors",
     "css-loader",
     "eslint",
     "eslint-config-airbnb",

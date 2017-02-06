@@ -19,7 +19,8 @@ module.exports = {
         // to avoid having multiple bundles for our tests
         // all specs get imported from allTheTests.js
         'test/karma_config/test-main.js',
-        'test/tests/allTheTests.js'
+        'test/tests/allTheTests.js',
+        'public/src/app/app.js'
     ],
 
     // preprocess matching files before serving them to the browser

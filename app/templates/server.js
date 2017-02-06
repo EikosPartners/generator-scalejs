@@ -4,11 +4,18 @@ const pjsonLoader = require('pjson-loader');
 const express = require('express');
 const bundler = require('./server/bundler.js');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 app.use(express.static('public'));
 app.use(bodyParser.json());
+
+// Use cors when in the test environment.
+// Run with: NODE_ENV=test npm start.
+if (app.get('env') === 'test') {
+    app.use(cors());
+}
 
 // pjson setup.
 pjsonLoader.load(app, {

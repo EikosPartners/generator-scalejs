@@ -18,12 +18,19 @@ function ajax(request, callback) {
 function _ajax(request, callback) {
     // Extract options and url from request:
     let req = request || baseUri; // Default for request when falsy
+
     const isRequestString = (typeof req === 'string' || req instanceof String),
-        url = (isRequestString ? req : req.url || '/') + (req.uri || ''),
         // use request.options if exists, otherwise use {}
         options = (!isRequestString && req.options) || {},
         type = (options.type || 'GET').toUpperCase(),
         data = req.data || req.data;
+
+    let url = (isRequestString ? req : req.url || '/') + (req.uri || '');
+
+    // Check if we're in the testing suite.
+    if (window.location.port === '9004') {
+        url = 'http://localhost:3000' + url;
+    }
 
     // Create request:
     req = new XMLHttpRequest();
