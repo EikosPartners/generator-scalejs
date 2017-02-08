@@ -22,28 +22,12 @@ Run the generator
 yo scalejs
 ```
 
-The generator gives you the option of creating a package.json during the process as well as choosing any additional services you would like installed. You can install these services at a later time if desired using the sub generator commands.
+The generator gives you the option of creating a package.json during the process as well as choosing any additional services you would like installed.
 
-## Available Sub-generators
+## Available Services
 * [profile](#profile)
-* [dataservice](#dataservice)
-* [font_icon](#font_icon)
 
 
 ### Profile
-Generates the files necessary to implement profile services within saclejs.
-```
-yo scalejs:profile
-```
+Generates the files necessary to implement [opensesame](https://github.com/EikosPartners/opensesame-profile) profile services within scalejs.
 
-### Dataservice
-Generates the files necessary for a custom dataservice.
-```
-yo scalejs:dataservice
-```
-
-### Font_Icon
-Generates the files necessary for font icons.
-```
-yo scalejs:font_icon
-```

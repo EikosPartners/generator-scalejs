@@ -85,12 +85,6 @@ module.exports = class extends Generator {
         // Copy all files from the public directory and the server.js file.
         return new Promise( (resolve, reject) => {
 
-            // Determine whice extra services the user chose and copy accordingly.
-            if (this.extras.includes(EXTRAS_PROFILE)) {
-                // Invoke the profile generator.
-                //this.composeWith('scalejs:profile', { fromMain: true });
-            }
-
             if (this.extras.includes(EXTRAS_DATASERVICE)) {
                 // Invoke dataservice generator.
                 //this.composeWith('scalejs:dataservice', { fromMain: true });
@@ -106,6 +100,32 @@ module.exports = class extends Generator {
                     console.error("There was an error:", err);
                     reject(err);
                 } else {
+                    let servFile = fs.readFileSync(path.join(this.destinationRoot(), 'server.js'), 'utf8');
+                    // Determine whice extra services the user chose and copy accordingly.
+                    if (this.extras.includes(EXTRAS_PROFILE)) {
+                        let profile_dep = "const opensesameProfile = require('opensesame-profile');\n";
+
+                        let profile_code = "\n//Check out the documentation and examples here https://github.com/EikosPartners/opensesame-profile";
+                        profile_code += "\n//you can give opensesame-profile an express app object\n";
+                        profile_code += "opensesameProfile({\n";
+                        profile_code += "   secret: 'testSecret',\n";
+                        profile_code += "   middleware: function (req, res, next) {\n";
+                        profile_code += "       // Can do route authorization here.\n";
+                        profile_code += "       next();\n";
+                        profile_code += "   },\n";
+                        profile_code += "   httpsOnly: false\n";
+                        profile_code += "}, app);\n";
+
+                        servFile = servFile.replace('{{profile_services}}', profile_code);
+                        servFile = servFile.replace('{{extra_deps}}', profile_dep);
+
+                    } else {
+                        servFile = servFile.replace('{{profile_services}}', '');
+                        servFile = servFile.replace('{{extra_deps}}', '');
+                    }
+
+                    fs.writeFileSync(path.join(this.destinationRoot(), 'server.js'), servFile);
+
                     console.log("Done copying files!");
                     resolve();
                 }
@@ -122,6 +142,10 @@ module.exports = class extends Generator {
 
             if (this.extras.includes(EXTRAS_TESTING)) {
                 deps.push.apply(deps, NPM_DEPENDENCIES.test_dependencies);
+            }
+
+            if (this.extras.includes(EXTRAS_PROFILE)) {
+                deps.push('opensesame-profile');
             }
 
             return this.npmInstall(deps, { 'save': true});

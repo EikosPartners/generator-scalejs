@@ -1,13 +1,16 @@
-// Imports:
 const http = require('http');
 const pjsonLoader = require('pjson-loader');
 const express = require('express');
 const bundler = require('./server/bundler.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+{{extra_deps}}
 
 const app = express();
 const server = http.createServer(app);
+
+{{profile_services}}
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
