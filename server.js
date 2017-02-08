@@ -1,13 +1,28 @@
-// Imports:
 const http = require('http');
 const pjsonLoader = require('pjson-loader');
 const express = require('express');
 const bundler = require('./server/bundler.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const opensesameProfile = require('opensesame-profile');
+
 
 const app = express();
 const server = http.createServer(app);
+
+
+//Check out the documentation and examples here https://github.com/EikosPartners/opensesame-profile
+//you can give opensesame-profile an express app object
+opensesameProfile({
+   secret: 'testSecret',
+   middleware: function (req, res, next) {
+       // Can do route authorization here.
+       next();
+   },
+   httpsOnly: false
+}, app);
+
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
