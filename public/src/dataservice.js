@@ -35,6 +35,8 @@ function _ajax(request, callback) {
     // Create request:
     req = new XMLHttpRequest();
 
+    req.withCredentials = true;
+
     req.onreadystatechange = function () {
         // Check to make sure request is completed, otherwise ignore:
         if (this.readyState === XMLHttpRequest.DONE) {

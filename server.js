@@ -10,6 +10,17 @@ const opensesameProfile = require('opensesame-profile');
 const app = express();
 const server = http.createServer(app);
 
+// Use cors when in the test environment.
+// Run with: NODE_ENV=test npm start.
+if (app.get('env') === 'test') {
+    console.log('in test env');
+    app.use(cors({
+        origin: true,
+        credentials: true,
+        preflightContinue: true
+    }));
+}
+
 
 //Check out the documentation and examples here https://github.com/EikosPartners/opensesame-profile
 //you can give opensesame-profile an express app object
@@ -25,12 +36,6 @@ opensesameProfile({
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-
-// Use cors when in the test environment.
-// Run with: NODE_ENV=test npm start.
-if (app.get('env') === 'test') {
-    app.use(cors());
-}
 
 // pjson setup.
 pjsonLoader.load(app, {
