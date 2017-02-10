@@ -20,7 +20,7 @@ module.exports = {
         // all specs get imported from allTheTests.js
         'test/karma_config/test-main.js',
         'test/tests/allTheTests.js',
-        'public/src/app/app.js'
+        'public/src/app/app-test.js'
     ],
 
     // preprocess matching files before serving them to the browser

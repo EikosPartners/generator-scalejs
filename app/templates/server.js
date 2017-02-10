@@ -9,16 +9,21 @@ const cors = require('cors');
 const app = express();
 const server = http.createServer(app);
 
+// Use cors when in the test environment.
+// Run with: NODE_ENV=test npm start.
+if (app.get('env') === 'test') {
+    console.log('in test env');
+    app.use(cors({
+        origin: true,
+        credentials: true,
+        preflightContinue: true
+    }));
+}
+
 {{profile_services}}
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-
-// Use cors when in the test environment.
-// Run with: NODE_ENV=test npm start.
-if (app.get('env') === 'test') {
-    app.use(cors());
-}
 
 // pjson setup.
 pjsonLoader.load(app, {
