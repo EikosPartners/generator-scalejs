@@ -10,7 +10,8 @@ const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
       EXTRAS_DATASERVICE = "Custom Data Service",
       EXTRAS_FONT_ICON = "Font Icon",
-      EXTRAS_TESTING= "Karma Tests";
+      EXTRAS_TESTING= "Karma Tests",
+      EXTRAS_TINGOOSE = "Tingoose";
 
 module.exports = class extends Generator {
     // Set up prompts
@@ -23,7 +24,7 @@ module.exports = class extends Generator {
                 type: "checkbox",
                 name: "extras",
                 message: "Which additional services would you like added?",
-                choices: [EXTRAS_PROFILE, EXTRAS_DATASERVICE, EXTRAS_FONT_ICON, EXTRAS_TESTING]
+                choices: [EXTRAS_PROFILE, EXTRAS_TESTING, EXTRAS_TINGOOSE]
             },
             {
                 type: "confirm",
@@ -124,6 +125,40 @@ module.exports = class extends Generator {
                         servFile = servFile.replace('{{extra_deps}}', '');
                     }
 
+                    // Determine whether to add tingoose services.
+                    if (this.extras.includes(EXTRAS_TINGOOSE)) {
+                        let tingoose_dep = "const tingoose = require('tingoose');\nconst collection = tingoose.collection;\n";
+
+                        let tingoose_code = "\n// For more info checkout the repo https://github.com/EikosPartners/tingoose\n";
+                        tingoose_code += "// Load data into tingoose.\n";
+                        tingoose_code += "tingoose.loadCollections([\n";
+                        tingoose_code += "    {\n";
+                        tingoose_code += "        name: 'some-data-name',\n";
+                        tingoose_code += "        data: 'your data in json',\n";
+                        tingoose_code += "        defaultPath: 'path/to/json'\n";
+                        tingoose_code += "    }\n";
+                        tingoose_code += "]);\n\n";
+                        tingoose_code += "function findData(dataName) {\n";
+                        tingoose_code += "    return new Promise( (resolve, reject) => {\n";
+                        tingoose_code += "        collection[data.name]\n";
+                        tingoose_code += "            .find()\n";
+                        tingoose_code += "            .toArray()\n";
+                        tingoose_code += "            .then( (results) => {\n";
+                        tingoose_code += "                resolve(results);\n";
+                        tingoose_code += "            })\n";
+                        tingoose_code += "            .catch( (err) => {\n";
+                        tingoose_code += "                reject(err);\n";
+                        tingoose_code += "            });\n";
+                        tingoose_code += "    });\n";
+                        tingoose_code += "}\n";
+
+                        servFile = servFile.replace('{{tingoose_code}}', tingoose_code);
+                        servFile = servFile.replace('{{tingoose_deps}}', tingoose_dep);
+                    } else {
+                        servFile = servFile.replace('{{tingoose_deps}}', '');
+                        servFile = servFile.replace('{{tingoose_code}}', '');
+                    }
+
                     fs.writeFileSync(path.join(this.destinationRoot(), 'server.js'), servFile);
 
                     console.log("Done copying files!");
@@ -146,6 +181,10 @@ module.exports = class extends Generator {
 
             if (this.extras.includes(EXTRAS_PROFILE)) {
                 deps.push('opensesame-profile');
+            }
+
+            if (this.extras.includes(EXTRAS_TINGOOSE)) {
+                deps.push('tingoose');
             }
 
             return this.npmInstall(deps, { 'save': true});

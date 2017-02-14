@@ -1,6 +1,6 @@
 {
   "name": "generator-scalejs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Yeoman generator for scalejs, a robust JavaScript framework for building versatile web and mobile applications in Visual Studio.",
   "main": "app/index.js",
   "scripts": {

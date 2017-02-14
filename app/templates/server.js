@@ -5,6 +5,7 @@ const bundler = require('./server/bundler.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 {{extra_deps}}
+{{tingoose_deps}}
 
 const app = express();
 const server = http.createServer(app);
@@ -21,6 +22,8 @@ if (app.get('env') === 'test') {
 }
 
 {{profile_services}}
+
+{{tingoose_code}}
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
