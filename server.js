@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const opensesameProfile = require('opensesame-profile');
 
+const tingoose = require('tingoose');
+const collection = tingoose.collection;
+
 
 const app = express();
 const server = http.createServer(app);
@@ -32,6 +35,32 @@ opensesameProfile({
    },
    httpsOnly: false
 }, app);
+
+
+
+// For more info checkout the repo https://github.com/EikosPartners/tingoose
+// Load data into tingoose.
+tingoose.loadCollections([
+    {
+        name: 'some-data-name',
+        data: 'your data in json',
+        defaultPath: 'path/to/json'
+    }
+]);
+
+function findData(dataName) {
+    return new Promise( (resolve, reject) => {
+        collection[data.name]
+            .find()
+            .toArray()
+            .then( (results) => {
+                resolve(results);
+            })
+            .catch( (err) => {
+                reject(err);
+            });
+    });
+}
 
 
 app.use(express.static('public'));
