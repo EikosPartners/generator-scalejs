@@ -85,13 +85,6 @@ app.get('/', (req, res, next) => {
     res.sendFile('index.html', { root: 'public' });
 });
 
-app.get('/data', (req, res) => {
-    findData('data')
-        .then( data => {
-            res.send(data);
-        });
-});
-
 server.listen(process.env.PORT || 3000, () => {
     console.log('Listening on %j...', server.address());
 });

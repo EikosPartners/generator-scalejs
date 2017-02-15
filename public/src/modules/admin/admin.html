@@ -1,0 +1,11 @@
+<div id="admin_template">
+    <div data-bind="template: {name: 'metadata_items_template', data: mappedChildNodes}, css: $data.classes"></div>
+</div>
+
+<!-- overwrite!-->
+<!-- todo why can't i supply a custom delete template in json? -->
+<div id="admin_list_delete_action">
+    <div class="button" data-class="list-remove">
+        <span data-class="admin-remove-action">DELETE</span>
+    </div>
+</div>

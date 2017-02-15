@@ -1,0 +1,15 @@
+[{
+    "type": "globalNavigation",
+    "routes": [
+        {
+            "text": "Home",
+            "route": "dashboard/{options*}",
+            "get": "pjson?name=pages/helloworld"
+        },
+        {
+            "text": "Admin",
+            "route": "admin/{options*}",
+            "get": "pjson?name=pages/admin"
+        }
+    ]
+}]

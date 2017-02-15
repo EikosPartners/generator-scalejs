@@ -1,4 +1,4 @@
-import { registerTemplates, root, template } from 'scalejs.mvvm';
+import { registerTemplates } from 'scalejs.mvvm';
 import $ from 'jquery';
 import { observable } from 'knockout';
 import ko from 'knockout';
@@ -53,7 +53,5 @@ export default function () {
 
         ko.applyBindings({ testRoot: testRoot, showRoot: showRoot }, document.getElementById("testRoot"));
         ko.applyBindings({ showRoot: showRoot }, document.getElementById("toggleRoot"));
-    } else {
-        root(template('main_template', main));
     }
 }
