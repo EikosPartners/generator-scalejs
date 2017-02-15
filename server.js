@@ -8,7 +8,7 @@ const opensesameProfile = require('opensesame-profile');
 
 const tingoose = require('tingoose');
 const collection = tingoose.collection;
-
+const tingooseData = require('./data/data.json');
 
 const app = express();
 const server = http.createServer(app);
@@ -42,15 +42,15 @@ opensesameProfile({
 // Load data into tingoose.
 tingoose.loadCollections([
     {
-        name: 'some-data-name',
-        data: 'your data in json',
-        defaultPath: 'path/to/json'
+        name: 'data',
+        data: tingooseData,
+        defaultPath: './data/data.json'
     }
 ]);
 
 function findData(dataName) {
     return new Promise( (resolve, reject) => {
-        collection[data.name]
+        collection[dataName]
             .find()
             .toArray()
             .then( (results) => {
@@ -83,6 +83,13 @@ bundler(app);
 /* GET home page. */
 app.get('/', (req, res, next) => {
     res.sendFile('index.html', { root: 'public' });
+});
+
+app.get('/data', (req, res) => {
+    findData('data')
+        .then( data => {
+            res.send(data);
+        });
 });
 
 server.listen(process.env.PORT || 3000, () => {
