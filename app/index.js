@@ -4,7 +4,8 @@ let Generator = require('yeoman-generator'),
     path = require('path'),
     ncp = require('ncp'),
     fs = require('fs'),
-    npmAddScript = require('npm-add-script');
+    npmAddScript = require('npm-add-script'),
+    mkdirp = require('mkdirp');
 
 const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
@@ -127,20 +128,20 @@ module.exports = class extends Generator {
 
                     // Determine whether to add tingoose services.
                     if (this.extras.includes(EXTRAS_TINGOOSE)) {
-                        let tingoose_dep = "const tingoose = require('tingoose');\nconst collection = tingoose.collection;\n";
+                        let tingoose_dep = "const tingoose = require('tingoose');\nconst collection = tingoose.collection;\nconst tingooseData = require('./data/data.json');";
 
                         let tingoose_code = "\n// For more info checkout the repo https://github.com/EikosPartners/tingoose\n";
                         tingoose_code += "// Load data into tingoose.\n";
                         tingoose_code += "tingoose.loadCollections([\n";
                         tingoose_code += "    {\n";
-                        tingoose_code += "        name: 'some-data-name',\n";
-                        tingoose_code += "        data: 'your data in json',\n";
-                        tingoose_code += "        defaultPath: 'path/to/json'\n";
+                        tingoose_code += "        name: 'data',\n";
+                        tingoose_code += "        data: tingooseData,\n";
+                        tingoose_code += "        defaultPath: './data/data.json'\n";
                         tingoose_code += "    }\n";
                         tingoose_code += "]);\n\n";
                         tingoose_code += "function findData(dataName) {\n";
                         tingoose_code += "    return new Promise( (resolve, reject) => {\n";
-                        tingoose_code += "        collection[data.name]\n";
+                        tingoose_code += "        collection[dataName]\n";
                         tingoose_code += "            .find()\n";
                         tingoose_code += "            .toArray()\n";
                         tingoose_code += "            .then( (results) => {\n";
@@ -154,6 +155,10 @@ module.exports = class extends Generator {
 
                         servFile = servFile.replace('{{tingoose_code}}', tingoose_code);
                         servFile = servFile.replace('{{tingoose_deps}}', tingoose_dep);
+
+                        // Create the data folder and data file.
+                        mkdirp.sync(path.join(this.destinationRoot(), 'data/'));
+                        fs.writeFileSync(path.join(this.destinationRoot(), 'data/data.json'), '[]');
                     } else {
                         servFile = servFile.replace('{{tingoose_deps}}', '');
                         servFile = servFile.replace('{{tingoose_code}}', '');
