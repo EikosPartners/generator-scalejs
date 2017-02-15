@@ -20,6 +20,7 @@ const default_dependencies = [
     "scalejs.hot-loader",
     "scalejs.metadatafactory-common",
     "scalejs.mvvm",
+    "scalejs.navigation",
     "source-map-loader",
     "style-loader",
     "url-loader",

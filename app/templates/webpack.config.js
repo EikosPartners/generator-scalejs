@@ -16,7 +16,9 @@ module.exports = {
             'scalejs.sandbox': path.join(__dirname, 'node_modules/scalejs/dist/scalejs.sandbox.js'),
 
             // extensions
-            'hotRender': path.join(__dirname, 'public/src/hotRender.js')
+            'hotRender': path.join(__dirname, 'public/src/hotRender.js'),
+
+            'jquery-ui/autocomplete': path.join(__dirname, 'node_modules/jquery-ui/ui/widgets/autocomplete.js')
         }
     },
     output: {

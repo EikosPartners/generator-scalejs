@@ -1,1 +1,21 @@
 // Main.scss
+body {
+    background-color: gray;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="button"], button, a.button, .button {
+    //font-family: $font-medium;
+    padding: 9px 15px;
+    background-color: #444;
+    font-size: 11px;
+    text-transform: uppercase;
+    border: 0;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 0;
+}
