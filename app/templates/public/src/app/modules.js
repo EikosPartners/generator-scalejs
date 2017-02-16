@@ -10,4 +10,4 @@ import 'scalejs.metadatafactory-common/dist/action/actions/event';
 import 'scalejs.metadatafactory-common/dist/action/actions/route';
 
 // Load app-specific modules:
-import './globalNavigation/globalNavigationModule';
+{{global_nav_module}}

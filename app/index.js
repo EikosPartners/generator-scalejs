@@ -3,6 +3,7 @@ let Generator = require('yeoman-generator'),
     yosay = require('yosay'),
     path = require('path'),
     ncp = require('ncp'),
+    fsExtra = require('fs-extra'),
     fs = require('fs'),
     npmAddScript = require('npm-add-script'),
     mkdirp = require('mkdirp');
@@ -12,7 +13,9 @@ const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_DATASERVICE = "Custom Data Service",
       EXTRAS_FONT_ICON = "Font Icon",
       EXTRAS_TESTING= "Karma Tests",
-      EXTRAS_TINGOOSE = "Tingoose";
+      EXTRAS_TINGOOSE = "Tingoose",
+      EXTRAS_GLOBAL_NAV = "Global Navigation Services",
+      EXTRAS_ADMIN = "Admin Panel";
 
 module.exports = class extends Generator {
     // Set up prompts
@@ -25,7 +28,7 @@ module.exports = class extends Generator {
                 type: "checkbox",
                 name: "extras",
                 message: "Which additional services would you like added?",
-                choices: [EXTRAS_PROFILE, EXTRAS_TESTING, EXTRAS_TINGOOSE]
+                choices: [EXTRAS_PROFILE, EXTRAS_TESTING, EXTRAS_TINGOOSE, EXTRAS_GLOBAL_NAV, EXTRAS_ADMIN]
             },
             {
                 type: "confirm",
@@ -166,8 +169,78 @@ module.exports = class extends Generator {
 
                     fs.writeFileSync(path.join(this.destinationRoot(), 'server.js'), servFile);
 
-                    console.log("Done copying files!");
-                    resolve();
+                    let globalNavPromise = new Promise( (resolve, reject) => {
+                        let mainHTML = fs.readFileSync(path.join(this.destinationRoot(), 'public/src/app/main/main.html'), 'utf8'),
+                            mainVM = fs.readFileSync(path.join(this.destinationRoot(), 'public/src/app/main/mainViewModel.js'), 'utf8'),
+                            modulesFile = fs.readFileSync(path.join(this.destinationRoot(), 'public/src/app/modules.js'), 'utf8');
+
+                        if (this.extras.includes(EXTRAS_GLOBAL_NAV)) {
+                            ncp(path.join(this.sourceRoot(), '../modules/globalNavigation'), path.join(this.destinationRoot(), 'public/src/app/globalNavigation/'), (err) => {
+                                // Add div with data bind of header to the main.html
+                                mainHTML = mainHTML.replace('{{global_nav}}', '<div data-bind="metadataFactory: header"></div>');
+
+                                // Add code to mainViewModel.
+                                let headerCode = "ajax('/pjson?name=pages/header').then( data => {\n";
+                                    headerCode += "       header(data);\n";
+                                    headerCode += "   });\n";
+
+                                let rootCode = "root(template('main_template', {\n";
+                                    rootCode += "       metadata: metadata,\n";
+                                    rootCode += "       header: header\n";
+                                    rootCode += "   }));\n";
+
+                                mainVM = mainVM.replace('{{global_nav_import}}', "import { layout } from 'scalejs.navigation';");
+                                mainVM = mainVM.replace('{{metadata_value}}', 'layout.content');
+                                mainVM = mainVM.replace('{{header_var}}', 'const header = observable();\n');
+                                mainVM = mainVM.replace('{{header_ajax}}', headerCode);
+                                mainVM = mainVM.replace('{{root_code}}', rootCode);
+
+                                // Add import to modules file.
+                                modulesFile = modulesFile.replace('{{global_nav_module}}', "import './globalNavigation/globalNavigationModule';");
+
+                                // Write the files.
+                                fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/main/main.html'), mainHTML);
+                                fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/main/mainViewModel.js'), mainVM);
+                                fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/modules.js'), modulesFile);
+
+                                // Copy over the header json.
+                                fsExtra.copy(path.join(this.sourceRoot(), '../appJson/header.json'), path.join(this.destinationRoot(), 'server/pjson/pages/header.json'), (err, files) => {
+                                    if (err) {
+                                        console.error(err);
+                                    }
+
+                                    console.log(files);
+                                    resolve();
+                                });
+                            });
+                        } else {
+                            // Replace template code in main.html
+                            mainHTML = mainHTML.replace('{{global_nav}}', '');
+
+                            // Replace template code in mainViewModel.
+                            mainVM = mainVM.replace('{{global_nav_import}}', '');
+                            mainVM = mainVM.replace('{{metadata_value}}', 'observable()');
+                            mainVM = mainVM.replace('{{header_var}}', '');
+                            mainVM = mainVM.replace('{{header_ajax}}', '');
+                            mainVM = mainVM.replace('{{root_code}}', "root(template('main_template', metadata);\n");
+
+                            // Replace modules file.
+                            modulesFile = modulesFile.replace('{{global_nav_module}}', '');
+
+                            // Write the files.
+                            fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/main/main.html'), mainHTML);
+                            fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/main/mainViewModel.js'), mainVM);
+                            fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/modules.js'), modulesFile);
+
+                            resolve();
+                        }
+                    });
+
+                    Promise.all([globalNavPromise])
+                        .then( () => {
+                            console.log('Done copying files!');
+                            resolve();
+                        });
                 }
             });
         });

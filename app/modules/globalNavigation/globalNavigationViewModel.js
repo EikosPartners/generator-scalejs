@@ -18,13 +18,9 @@ export default function globalNavigation(node) {
             .concat(walkGetTypes(node.children)), []);
     }
 
+    // Add modules here to be loaded upon clicking their nav link.
     let resolveModuleLookup = {
-        admin: function (done) {
-            require.ensure([], function (require) {
-                require('../../modules/admin/adminModule.js');
-                done();
-            });
-        },
+
     };
 
     function resolveModule(moduleType, done = empty) {
@@ -67,8 +63,6 @@ export default function globalNavigation(node) {
             }
         });
     }
-
-    console.log("hello world");
 
     routes().forEach(function (route) {
         navigation.addNav(route, function (routeInfo) {
