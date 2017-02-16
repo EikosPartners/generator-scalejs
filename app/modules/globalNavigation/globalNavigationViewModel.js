@@ -20,7 +20,7 @@ export default function globalNavigation(node) {
 
     // Add modules here to be loaded upon clicking their nav link.
     let resolveModuleLookup = {
-
+        {{admin_module}}
     };
 
     function resolveModule(moduleType, done = empty) {

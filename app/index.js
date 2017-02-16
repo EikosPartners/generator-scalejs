@@ -6,7 +6,8 @@ let Generator = require('yeoman-generator'),
     fsExtra = require('fs-extra'),
     fs = require('fs'),
     npmAddScript = require('npm-add-script'),
-    mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp'),
+    fsw = require('ep-utils').fsWrapper;
 
 const NPM_DEPENDENCIES = require('./dependencies'),
       EXTRAS_PROFILE = "Profile Services",
@@ -208,8 +209,6 @@ module.exports = class extends Generator {
                                     if (err) {
                                         console.error(err);
                                     }
-
-                                    console.log(files);
                                     resolve();
                                 });
                             });
@@ -222,7 +221,7 @@ module.exports = class extends Generator {
                             mainVM = mainVM.replace('{{metadata_value}}', 'observable()');
                             mainVM = mainVM.replace('{{header_var}}', '');
                             mainVM = mainVM.replace('{{header_ajax}}', '');
-                            mainVM = mainVM.replace('{{root_code}}', "root(template('main_template', metadata);\n");
+                            mainVM = mainVM.replace('{{root_code}}', "root(template('main_template', { metadata: metadata }));\n");
 
                             // Replace modules file.
                             modulesFile = modulesFile.replace('{{global_nav_module}}', '');
@@ -236,11 +235,52 @@ module.exports = class extends Generator {
                         }
                     });
 
-                    Promise.all([globalNavPromise])
-                        .then( () => {
-                            console.log('Done copying files!');
+                    globalNavPromise.then( () => {
+                        // Add admin code to the project after the globalNavigation code has been added because we have to make changes to global nav files if
+                        // the user chose to add those services.
+                        if (this.extras.includes(EXTRAS_ADMIN)) {
+                            ncp(path.join(this.sourceRoot(), '../modules/admin'), path.join(this.destinationRoot(), 'public/src/app/admin'), () => {
+                                if (this.extras.includes(EXTRAS_GLOBAL_NAV)) {
+                                    let globalVM = fs.readFileSync(path.join(this.destinationRoot(), 'public/src/app/globalNavigation/globalNavigationViewModel.js'), 'utf8');
+                                    // Load the globalNavigationViewModel and add the admin module to the lookup dictionary.
+                                    let adminCode = "admin: function(done) {\n";
+                                        adminCode += "  require.ensure([], function(require) {\n";
+                                        adminCode += "      require('../admin/adminModule.js');\n";
+                                        adminCode += "      done();\n";
+                                        adminCode += "  });\n";
+                                        adminCode += "},\n";
+
+                                    globalVM = globalVM.replace('{{admin_module}}', adminCode);
+
+                                    fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/globalNavigation/globalNavigationViewModel.js'), globalVM);
+
+                                    // Add the admin page to the header.json
+                                    let headerJSON = fsw.fileToJsonSync(path.join(this.destinationRoot(), 'server/pjson/pages/header.json'));
+
+                                    headerJSON[0].routes.push({
+                                        "text": "Admin",
+                                        "route": "admin/{options*}",
+                                        "get": "pjson?name=pages/admin"
+                                    });
+
+                                    fsw.jsonToFileSync(path.join(this.destinationRoot(), 'server/pjson/pages/header.json'), headerJSON);
+                                }
+
+                                // Copy the admin json.
+                                fsExtra.copy(path.join(this.sourceRoot(), '../appJson/admin.json'), path.join(this.destinationRoot(), 'server/pjson/pages/admin.json'), () => {
+                                    resolve();
+                                });
+                            });
+                        } else {
+                            if (this.extras.includes(EXTRAS_GLOBAL_NAV)) {
+                                let globalVM = fs.readFileSync(path.join(this.destinationRoot(), 'public/src/app/globalNavigation/globalNavigationViewModel.js'), 'utf8');
+                                globalVM = globalVM.replace('{{admin_module}}', '');
+                                fs.writeFileSync(path.join(this.destinationRoot(), 'public/src/app/globalNavigation/globalNavigationViewModel.js'), globalVM);
+                            }
+
                             resolve();
-                        });
+                        }
+                    });
                 }
             });
         });
